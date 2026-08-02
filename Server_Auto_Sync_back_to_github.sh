@@ -10,7 +10,7 @@ echo "=========================================="
 echo "[$(date +'%Y-%m-%d %H:%M:%S')] 开始执行同步任务..."
 
 # 1. 运行 Python 爬虫脚本
-python3 Peoples_Daily_Sync.py
+/var/Projects/PAOW/venv/bin/python3 Peoples_Daily_Sync.py
 
 # 2. 检查是否有新生成的 md 文件或数据变动
 if [ -n "$(git status --porcelain)" ]; then
