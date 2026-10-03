@@ -4,7 +4,7 @@
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # 切换到项目根目录（服务器路径）
-cd /var/Projects/PAOW
+cd /home/heqi/PAOW
 
 echo "=========================================="
 echo "[$(date +'%Y-%m-%d %H:%M:%S')] 开始执行四大报纸同步任务..."
@@ -12,16 +12,16 @@ echo "[$(date +'%Y-%m-%d %H:%M:%S')] 开始执行四大报纸同步任务..."
 # 1. 运行 Python 爬虫脚本（严格使用虚拟环境中的 python3）
 
 echo "▶️ [1/4] 开始抓取《人民日报》..."
-/var/Projects/PAOW/venv/bin/python3 Peoples_Daily_Sync.py
+/home/heqi/PAOW/venv/bin/python3 Peoples_Daily_Sync.py
 
 echo "▶️ [2/4] 开始抓取《光明日报》..."
-/var/Projects/PAOW/venv/bin/python3 Guangming_Daily_Sync.py
+/home/heqi/PAOW/venv/bin/python3 Guangming_Daily_Sync.py
 
 echo "▶️ [3/4] 开始抓取《科技日报》..."
-/var/Projects/PAOW/venv/bin/python3 Science_and_Technology_Daily_Sync.py
+/home/heqi/PAOW/venv/bin/python3 Science_and_Technology_Daily_Sync.py
 
 echo "▶️ [4/4] 开始抓取《中国青年报》..."
-/var/Projects/PAOW/venv/bin/python3 China_Youth_Daily_Sync.py
+/home/heqi/PAOW/venv/bin/python3 China_Youth_Daily_Sync.py
 
 echo "✅ 四大报纸抓取全部结束，开始检查数据变动..."
 echo "------------------------------------------"
