@@ -6,8 +6,24 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
 def clean_filename(filename):
-    """清理文件名中的非法字符"""
-    return re.sub(r'[\/\\\:\*\?\"\<\>\|]', '_', filename).strip()
+    """清理文件名中的非法字符，使其在 Windows / Linux 上均合规"""
+    if not filename:
+        return ""
+    # 1. 删除换行、回车、制表符等所有控制字符（Linux 允许但 Windows 禁止，直接删除不补空格）
+    filename = re.sub(r'[\x00-\x1f\x7f]', '', filename)
+    # 2. 替换 Windows 保留字符
+    filename = re.sub(r'[\/\\\:\*\?\"\<\>\|]', '_', filename)
+    # 3. 压缩连续空白为单个空格，并去除首尾空白
+    filename = re.sub(r'\s+', ' ', filename).strip()
+    # 4. 去除结尾的点和空格（Windows 不允许文件名以点或空格结尾）
+    filename = filename.rstrip(' .')
+    # 5. 规避 Windows 保留设备名
+    reserved = {'CON', 'PRN', 'AUX', 'NUL',
+                *[f'COM{i}' for i in range(1, 10)],
+                *[f'LPT{i}' for i in range(1, 10)]}
+    if filename.upper() in reserved:
+        filename = f"_{filename}"
+    return filename
 
 def save_article_to_md_pro(article_url, default_title, folder_path, headers, seen_fingerprints):
     """
